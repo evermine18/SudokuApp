@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner spinnerList[][] = new Spinner[8][8];
+        Spinner spinnerList[][] = new Spinner[9][9];
+        Random rand = new Random();
+        int number = 15;
         CharSequence[] nombres = {"1","2","3","4","5","6","7","8","9"};
 
         TableLayout tl = findViewById(R.id.tableLayout);
@@ -35,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
                 spinnerList[y][x]=spinner;
             }
             tl.addView(row);
+
+            while(number>0){
+                int i = rand.nextInt(9);
+                int j = rand.nextInt(9);
+                System.out.println(i+ "j "+j);
+                selectSpinnerItemByValue(spinnerList[i][j],2);
+                number--;
+            }
+
         }
         /*
         for (int i = 0; i<5; i++){
@@ -54,5 +68,14 @@ public class MainActivity extends AppCompatActivity {
             tl.addView(row);
         }
         */
+    }
+    public static void selectSpinnerItemByValue(Spinner spnr, long value) {
+        SimpleCursorAdapter adapter = (SimpleCursorAdapter) spnr.getAdapter();
+        for (int position = 0; position < adapter.getCount(); position++) {
+            if(adapter.getItemId(position) == value) {
+                spnr.setSelection(position);
+                return;
+            }
+        }
     }
 }

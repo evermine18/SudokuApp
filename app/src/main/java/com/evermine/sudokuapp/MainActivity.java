@@ -2,7 +2,10 @@ package com.evermine.sudokuapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -22,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Random rand = new Random();
-        int number = 15;
         CharSequence[] nombres = {"0","1","2","3","4","5","6","7","8","9"};
 
         TableLayout tl = findViewById(R.id.tableLayout);
@@ -39,49 +40,57 @@ public class MainActivity extends AppCompatActivity {
                 row.addView(spinner);
                 spinner.setTag(R.id.col,x);
                 spinner.setTag(R.id.fila,y);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        int fila = (int) adapterView.getTag(R.id.col);
+                        int col = (int) adapterView.getTag(R.id.fila);
+                        if(!sudoku.setSudokuvalue(col, fila, adapterView.getSelectedItemPosition()) && adapterView.getSelectedItemPosition() != 0){
+                            spinnerList[col][fila].setBackgroundResource(R.drawable.spinnerwrong_background);
+                            spinnerList[col][fila].setSelection(sudoku.getSudokuValue(col,fila));
+                        }else{
+                            spinnerList[col][fila].setBackground(null);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
                 spinnerList[y][x]=spinner;
                 //spinner.setSelection(4);
                 //System.out.println(sudoku.getSudokuValue(y,x));
             }
             tl.addView(row);
 
-            //updateView();
+        }
+        startGame();
 
-        }
-        while(number>0){
-            int i = rand.nextInt(9);
-            int j = rand.nextInt(9);
-            System.out.println(i+ "j "+j);
-            sudoku.setSudokuvalue(i,j,rand.nextInt(9)+1);
-            number--;
-        }
-        spinnerList[1][1].setSelection(2);
-        /*
-        for (int i = 0; i<5; i++){
-            TableRow row = new TableRow(this);
-            Spinner spinner = new Spinner(this);
-            Spinner spinner2 = new Spinner(this);
-            Spinner spinner3 = new Spinner(this);
-            ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
-                    android.R.layout.simple_spinner_item, nombres);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
-            spinner2.setAdapter(adapter);
-            spinner3.setAdapter(adapter);
-            row.addView(spinner);
-            row.addView(spinner2);
-            row.addView(spinner3);
-            tl.addView(row);
-        }
-        */
     }
 
     public static void updateView(){
         for (int i = 0;i<9;i++){
             for (int j = 0;j<9;j++){
-                spinnerList[1][1].setSelection(1);
+                spinnerList[i][j].setSelection(sudoku.getSudokuValue(i,j));
+                //spinnerList[i][j].setEnabled(false);
             }
         }
+    }
+
+    public static void startGame(){
+        Random rand = new Random();
+        int number = 15;
+        while(number>0){
+            int i = rand.nextInt(9);
+            int j = rand.nextInt(9);
+            System.out.println(i+ "j "+j);
+            if(sudoku.setSudokuvalue(i,j,rand.nextInt(9)+1)==true){
+                number--;
+                spinnerList[i][j].setEnabled(false);
+            }
+        }
+        updateView();
     }
 
     public static void selectSpinnerItemByValue(Spinner spnr, long value) {

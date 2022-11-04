@@ -16,7 +16,23 @@ public class Sudoku {
         return sudoku[i][j];
     }
 
-    public  void setSudokuvalue(int i,int j,int value){
-        sudoku[i][j]=value;
+    public boolean setSudokuvalue(int i,int j,int value){
+        boolean isCorrect = true;
+        for (int x = 0; x<sudoku[i].length; x++){
+            System.out.println("First " + sudoku[i][x]);
+            if (value==sudoku[i][x]){
+                isCorrect=false;
+            }
+        }
+        for (int y = 0; y<sudoku.length; y++){
+            System.out.println("Second "+sudoku[y][j]);
+            if (value==sudoku[y][j]){
+                isCorrect=false;
+            }
+        }
+        if (isCorrect==true) {
+            sudoku[i][j]=value;
+        }
+        return isCorrect;
     }
 }

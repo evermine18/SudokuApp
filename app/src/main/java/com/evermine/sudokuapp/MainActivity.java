@@ -15,14 +15,16 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static Spinner spinnerList[][] = new Spinner[9][9];
+    private static Sudoku sudoku = new Sudoku();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner spinnerList[][] = new Spinner[9][9];
         Random rand = new Random();
         int number = 15;
-        CharSequence[] nombres = {"1","2","3","4","5","6","7","8","9"};
+        CharSequence[] nombres = {"0","1","2","3","4","5","6","7","8","9"};
 
         TableLayout tl = findViewById(R.id.tableLayout);
         for (int y = 0; y<9; y++){
@@ -38,18 +40,22 @@ public class MainActivity extends AppCompatActivity {
                 spinner.setTag(R.id.col,x);
                 spinner.setTag(R.id.fila,y);
                 spinnerList[y][x]=spinner;
+                //spinner.setSelection(4);
+                //System.out.println(sudoku.getSudokuValue(y,x));
             }
             tl.addView(row);
 
-            while(number>0){
-                int i = rand.nextInt(9);
-                int j = rand.nextInt(9);
-                System.out.println(i+ "j "+j);
-                selectSpinnerItemByValue(spinnerList[i][j],2);
-                number--;
-            }
+            //updateView();
 
         }
+        while(number>0){
+            int i = rand.nextInt(9);
+            int j = rand.nextInt(9);
+            System.out.println(i+ "j "+j);
+            sudoku.setSudokuvalue(i,j,rand.nextInt(9)+1);
+            number--;
+        }
+        spinnerList[1][1].setSelection(2);
         /*
         for (int i = 0; i<5; i++){
             TableRow row = new TableRow(this);
@@ -69,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         }
         */
     }
+
+    public static void updateView(){
+        for (int i = 0;i<9;i++){
+            for (int j = 0;j<9;j++){
+                spinnerList[1][1].setSelection(1);
+            }
+        }
+    }
+
     public static void selectSpinnerItemByValue(Spinner spnr, long value) {
         SimpleCursorAdapter adapter = (SimpleCursorAdapter) spnr.getAdapter();
         for (int position = 0; position < adapter.getCount(); position++) {

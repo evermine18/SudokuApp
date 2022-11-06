@@ -73,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0;i<9;i++){
             for (int j = 0;j<9;j++){
                 spinnerList[i][j].setSelection(sudoku.getSudokuValue(i,j));
+                spinnerList[i][j].setBackground(null);
                 //spinnerList[i][j].setEnabled(false);
             }
         }
+        sudoku.showSudoku();
     }
 
     public static void startGame(){
@@ -88,9 +90,12 @@ public class MainActivity extends AppCompatActivity {
             if(sudoku.setSudokuvalue(i,j,rand.nextInt(9)+1)==true){
                 number--;
                 spinnerList[i][j].setEnabled(false);
+            }else{
+                sudoku.setSudokuvalue(i,j,0);
             }
         }
         updateView();
+
     }
 
     public static void selectSpinnerItemByValue(Spinner spnr, long value) {

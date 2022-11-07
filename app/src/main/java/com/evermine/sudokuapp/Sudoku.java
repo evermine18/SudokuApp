@@ -37,6 +37,31 @@ public class Sudoku {
                 isCorrect=false; //If we detect the same value on a column, we set the value to false
             }
         }
+        int squareI=0;
+        int squareJ=0;
+        //Checking square
+        while(true){
+            squareI++;
+            if((squareI*3)-1<=i){
+                break;
+            }
+        }
+        while(true){
+            squareJ++;
+            if((squareJ*3)-1<=i){
+                break;
+            }
+        }
+        System.out.println("TESESES: "+squareI+squareJ);
+        for(int x = ((squareI-1)*3)-1;x<x+3;x++){
+            for(int y = ((squareI-1)*3)-1;y<y+3;y++){
+                if(sudoku[x][y]==value && x!=i && y!=j){
+                    isCorrect=false;
+                }
+            }
+        }
+
+
         sudoku[i][j]=value; //Finally we will set the value provided
 
         return isCorrect;

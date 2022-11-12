@@ -39,22 +39,22 @@ public class Sudoku {
                 isCorrect=false; //If we detect the same value on a column, we set the value to false
             }
         }
-        /*
+
         int squareI=getSquare(j);
         int squareJ=getSquare(i);
-        //Checking square(Not Working)
+        //Checking square
 
         if(value!=0) {
             for (int x = (squareJ * 3); x < (squareJ * 3) + 3; x++) {
                 for (int y = (squareI * 3); y < (squareI * 3) + 3; y++) {
-                    if (sudoku[x][y] == value && x != j && y != i) {
+                    if (sudoku[x][y] == value && x != i && y != j) {
                         isCorrect = false;
                     }
                     //System.out.println("x: "+x+"y: "+y);
                 }
             }
         }
-        */
+
         sudoku[i][j]=value; //Finally we will set the value provided
 
         return isCorrect;

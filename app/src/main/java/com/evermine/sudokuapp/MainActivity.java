@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public static void startGame(){
         Random rand = new Random();
-        int number = 30;
+        int number = 15;
         while(number>0){
             int i = rand.nextInt(9); //Random col
             int j = rand.nextInt(9); //Random row
@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
+    * WARN! The app frezze when the sudoku is not possible to resolve
     * This recursive method resolves the game with backtracking algorithm
     * @param col This parameter references to column
     * @param row This parameter references to row

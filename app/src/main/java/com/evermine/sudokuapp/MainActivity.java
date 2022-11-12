@@ -130,11 +130,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean  resolveGame(int col, int row){
         //If the row is 9 it means that the sudoku has been solved
-        if(row==9){
+        System.out.println(""+col);
+        if(row>=9){
             return true;
         }
         //If the col is 9 we need to call the function to resolve the following row
-        else if(col==9){
+        else if(col>=9){
             return resolveGame(0,row+1);
         }
         //If we detect a value we need to skip this value, becose can be a predefined value
@@ -142,11 +143,12 @@ public class MainActivity extends AppCompatActivity {
         else if(sudoku.getSudokuValue(col,row)!=0){
             return resolveGame(col+1,row);
         }
+
         //Now we need to do a for that try to set a value from 1 to 9
         //until we find the right one
         for(int i = 1;i<=9;i++){
             if (sudoku.setSudokuvalue(col, row, i)) {
-                sudoku.showSudoku();
+                //sudoku.showSudoku();
                 if(resolveGame(col+1,row)){
                     return true;
                 }
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //If we dont find a valid value we will return false and the previous call will try with the following value
         sudoku.setSudokuvalue(col, row, 0);
+
         return false;
     }
 

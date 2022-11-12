@@ -1,5 +1,7 @@
 package com.evermine.sudokuapp;
 
+import java.util.Scanner;
+
 public class Sudoku {
     private int[][] sudoku = new int[9][9];
 
@@ -19,8 +21,8 @@ public class Sudoku {
 
     /*
     * This function tries to set a value and returns if the value is valid or not
-    * @param i References to column
-    * @param j References to row
+    * @param i References to row
+    * @param j References to column
     * @return boolean This return a boolean depending if the value is valid or not
      */
     public boolean setSudokuvalue(int i,int j,int value){
@@ -37,31 +39,22 @@ public class Sudoku {
                 isCorrect=false; //If we detect the same value on a column, we set the value to false
             }
         }
-        int squareI=0;
-        int squareJ=0;
-        //Checking square
-        while(true){
-            squareI++;
-            if((squareI*3)-1<=i){
-                break;
-            }
-        }
-        while(true){
-            squareJ++;
-            if((squareJ*3)-1<=i){
-                break;
-            }
-        }
-        System.out.println("TESESES: "+squareI+squareJ);
-        for(int x = ((squareI-1)*3)-1;x<x+3;x++){
-            for(int y = ((squareI-1)*3)-1;y<y+3;y++){
-                if(sudoku[x][y]==value && x!=i && y!=j){
-                    isCorrect=false;
+        /*
+        int squareI=getSquare(j);
+        int squareJ=getSquare(i);
+        //Checking square(Not Working)
+
+        if(value!=0) {
+            for (int x = (squareJ * 3); x < (squareJ * 3) + 3; x++) {
+                for (int y = (squareI * 3); y < (squareI * 3) + 3; y++) {
+                    if (sudoku[x][y] == value && x != j && y != i) {
+                        isCorrect = false;
+                    }
+                    //System.out.println("x: "+x+"y: "+y);
                 }
             }
         }
-
-
+        */
         sudoku[i][j]=value; //Finally we will set the value provided
 
         return isCorrect;
@@ -79,5 +72,13 @@ public class Sudoku {
             System.out.println();
         }
         System.out.println("------------------------");
+    }
+    public int getSquare(int pos){
+        if(pos<=8 && pos>=6){
+            return 2;
+        }else if(pos<=5 && pos>=3){
+            return 1;
+        }
+        return 0;
     }
 }
